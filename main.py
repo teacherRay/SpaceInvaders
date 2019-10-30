@@ -5,19 +5,30 @@ pygame.init()
 
 #init screen and add title and icon
 pygame.display.set_caption("Space Invaders")
-icon = pygame.image.load('./images/ufo.png')
+icon = pygame.image.load('./images/icon.png')
 pygame.display.set_icon(icon)
 
 #screen size
 screen = pygame.display.set_mode((800,640))
 
+#load player
 playerImg = pygame.image.load('./images/spaceship.png')
 playerX = 370
 playerY = 480
 playerX_change = 0
 
+#load enemy
+enemyImg = pygame.image.load('./images/enemy.png')
+enemyX = 370
+enemyY = 50
+enemyX_change = 0
+enemyY_change = 0
+
 def player(x,y):
     screen.blit(playerImg,(x,y))
+
+def enemy(x,y):
+    screen.blit(enemyImg,(x,y))
 
 #game loop
 running = True
@@ -29,7 +40,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-            print('hello')
+            
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
@@ -42,12 +53,23 @@ while running:
 
     playerX += playerX_change 
 
+    #impose screen boundaries
     if playerX < 0:
         playerX = 0
-    if playerX > 740:
-        playerX = 740
+    elif playerX > 736:
+        playerX = 736
+        
+    if enemyX < 0:
+        enemyX = 0
+    elif enemyX > 736:
+        enemyX = 736    
+    
 
+    #update player location
     player(playerX,playerY)
+
+    #update player location
+    enemy(enemyX,enemyY)
 
     #update screen
     pygame.display.update()
