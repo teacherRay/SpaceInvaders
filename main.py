@@ -1,4 +1,5 @@
 import pygame
+import random
 
 #setup pygame
 pygame.init()
@@ -19,9 +20,10 @@ playerX_change = 0
 
 #load enemy
 enemyImg = pygame.image.load('./images/enemy.png')
-enemyX = 370
-enemyY = 50
-enemyX_change = 0
+#spawn enemy in random places
+enemyX = random.randint(0,736)
+enemyY = random.randint(50,150)
+enemyX_change = 0.3
 enemyY_change = 0
 
 def player(x,y):
@@ -41,7 +43,6 @@ while running:
         if event.type == pygame.QUIT:
             running = False
             
-
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 playerX_change = -0.3
@@ -51,7 +52,8 @@ while running:
               if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                   playerX_change = 0 
 
-    playerX += playerX_change 
+    playerX += playerX_change
+    enemyX += enemyX_change 
 
     #impose screen boundaries
     if playerX < 0:
@@ -60,9 +62,9 @@ while running:
         playerX = 736
         
     if enemyX < 0:
-        enemyX = 0
+        enemyX_change = 0.3
     elif enemyX > 736:
-        enemyX = 736    
+        enemyX_change = -0.3   
     
 
     #update player location
